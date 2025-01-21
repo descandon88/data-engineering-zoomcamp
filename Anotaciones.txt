@@ -1,0 +1,32 @@
+01-week
+
+@cloudprograms9612
+2 years ago
+After doing docker-compose up, and your table is gone? This is how you ingest the taxi trip data again:
+
+Go to the code where you would copy and paste it in your terminal to run the ingestion script:
+-------
+URL="etc.etc…/yellow_tripdata_2021-01.csv.gz"
+docker run -it \
+  --network=pg-network \
+  taxi_ingest:v001 \
+    --user=root \
+    --password=root \
+    --host=pg-database \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=yellow_taxi_trips \
+    --url=${URL}
+-------
+
+Change:
+1) 
+--network=pg-network
+Into
+--network=2_docker_sql_default
+( My guess why this works is b/c when you set up the compose, we didn't specify network name, so we are using the default name)
+2)
+--host=pg-database
+Into
+--host=pgdatabase
+(In compose, the name we set for the service is also the host name )
