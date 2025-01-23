@@ -1,0 +1,6 @@
+pandas==2.2.3
+sqlalchemy==2.0.36
+psycopg==3.2.3
+psycopg2-binary==2.9.10
+fastparquet==2024.11.0
+pgcli==4.1.0
