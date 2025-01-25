@@ -1,0 +1,35 @@
+FROM python:3.10.12-slim
+
+WORKDIR /app
+COPY . /app
+
+#RUN apt-get install wget
+#RUN apt-get update 
+#RUN apt-get install -y wget
+RUN apt-get update && apt-get install -y --no-install-recommends \
+wget \
+gcc \
+libpq-dev \
+&& apt-get clean \
+&& rm -rf /var/lib/apt/lists/*
+
+
+#RUN pip install sqlalchemy psycopg2 psycopg2-binary
+#RUN pip install fastparquet
+#RUN pip install pandas
+#RUN pip install matplotlib
+#RUN pip install pgcli
+#RUN pip install sqlalchemy psycopg2 psycopg2-binary fastparquet pandas matplotlib pgcli
+COPY requirements.txt /app/requirements.txt
+# Actualiza pip a la última versión
+RUN pip install --upgrade pip
+
+RUN pip install  -r requirements.txt
+
+
+COPY ingest_data.py /app/ingest_data.py
+#COPY pipeline.py pipeline.py
+
+#ENTRYPOINT [ "bash" ]
+#ENTRYPOINT [ "python", "pipeline.py"]
+ENTRYPOINT [ "python", "./ingest_data.py"]
