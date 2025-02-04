@@ -105,3 +105,28 @@ docker run -it \                                                    ─╯
   --db=postgres \
   --table_name=yellow_taxi_trips \
   --url=${URL}
+
+
+  docker run -it \  
+  --network=pg-network \
+  homework01:v001 \
+  --user=postgres \
+  --password=postgres \
+  --host=db \
+  --port=5432 \
+  --db=ny_taxi \
+  --table_name=yellow_taxi_trips_2019 \
+  --url=${URL}
+
+  Homework01 - Question 03 docker run command 
+  
+  docker run -it \                                                       ─╯
+  --network=pg-network \
+  homework01:v001 \
+  --user=postgres \
+  --password=postgres \
+  --host=postgres \
+  --port=5432 \
+  --db=ny_taxi \
+  --table_name=yellow_taxi_trips_2019 \
+  --url="${URL}"
