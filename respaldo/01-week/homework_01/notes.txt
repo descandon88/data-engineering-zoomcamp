@@ -1,0 +1,114 @@
+Question 1: Understanding docker first run
+
+Answer: 
+24.3.1
+Solution:
+  docker run -it --name hm01-first-question --entrypoint bash python:3.12.8 
+  Unable to find image 'python:3.12.8' locally
+  3.12.8: Pulling from library/python
+  e474a4a4cbbf: Pull complete 
+  d22b85d68f8a: Pull complete 
+  936252136b92: Pull complete 
+  94c5996c7a64: Pull complete 
+  c980de82d033: Pull complete 
+  c80762877ac5: Pull complete 
+  86f9cc2995ad: Pull complete 
+  Digest: sha256:2e726959b8df5cd9fd95a4cbd6dcd23d8a89e750e9c2c5dc077ba56365c6a925
+  Status: Downloaded newer image for python:3.12.8
+  root@7339a103fe8e:/# pip -version
+
+  Usage:   
+    pip <command> [options]
+
+  no such option: -e
+  root@7339a103fe8e:/# pip --version
+  pip 24.3.1 from /usr/local/lib/python3.12/site-packages/pip (python 3.12)
+
+Question 2: Understanding Docker networking and docker-compose
+Answer: 
+db:5432
+
+
+Question 3: 
+
+3.a 
+
+answer: 104838
+
+3.b 
+select count(*)
+from yellow_taxi_trips_2019 ytt
+left join dim_zones dz on ytt."PULocationID" = dz."LocationID"
+where ytt."trip_distance" > 1
+ and ytt."trip_distance" <=3
+Answer: 199013
+
+
+SELECT 
+    CASE
+        WHEN ytt."trip_distance" <= 1 THEN 3.1
+        WHEN ytt."trip_distance" > 1 AND ytt."trip_distance" <= 3 THEN 3.2
+        WHEN ytt."trip_distance" > 3 AND ytt."trip_distance" <= 7 THEN 3.3
+        WHEN ytt."trip_distance" > 7 AND ytt."trip_distance" <= 10 THEN 3.3
+		WHEN ytt."trip_distance" > 10 THEN 3.5
+    END AS tipo,
+	COUNT(*) AS total
+FROM yellow_taxi_trips_2019 ytt
+LEFT JOIN dim_zones dz 
+    ON ytt."PULocationID" = dz."LocationID"
+GROUP BY tipo
+ORDER BY tipo;
+
+
+Question 4. Longest trip for each day
+
+select date(ytt.lpep_pickup_datetime) as pickup_date,
+max(ytt.trip_distance) as longest_trip 
+from yellow_taxi_trips_2019 ytt
+left join dim_zones dz on ytt."PULocationID" = dz."LocationID"
+where ytt.lpep_pickup_datetime ilike '%2019-10-11%'
+or ytt.lpep_pickup_datetime ilike '2019-10-24%'
+or ytt.lpep_pickup_datetime ilike '2019-10-26%'
+or ytt.lpep_pickup_datetime ilike '2019-10-31%'
+group by
+pickup_date
+order by
+longest_trip  DESC
+
+Question 5
+
+select * from ( 
+select dz."Zone", sum(ytt.total_amount) as total  from yellow_taxi_trips_2019 ytt
+left join dim_zones dz on ytt."PULocationID" = dz."LocationID"
+where date(ytt.lpep_pickup_datetime) = '2019-10-18'
+group by
+dz."Zone"
+) x
+where x.total > 13000
+Result
+
+
+Question 6
+
+
+select x.drop_off, sum(x.total_tip) as top_zones_total_tip
+from (
+	select dz."Zone" as pick_up
+	, dz2."Zone" as drop_off
+	, ytt.tip_amount as total_tip  
+	from yellow_taxi_trips_2019 ytt
+	left join dim_zones dz on ytt."PULocationID" = dz."LocationID"
+	left join dim_zones dz2 on ytt."DOLocationID" = dz2."LocationID" 
+	where 
+	dz."Zone" ilike '%East Harlem North%'
+) x
+where
+x.drop_off like '%Yorkville West%'
+or x.drop_off ilike '%JFK Airport%'
+or x.drop_off ilike '%East Harlem North%'
+or x.drop_off ilike '%East Harlem South%'
+group by
+x.drop_off
+ORDER BY 
+top_zones_total_tip DESC
+

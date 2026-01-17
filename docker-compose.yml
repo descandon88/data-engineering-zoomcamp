@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  base:
+    build:
+      context: .
+      dockerfile: base-env/Dockerfile
+    image: base-env
+    container_name: base-env
+    ports:
+      - "2222:22"
+
+  spark:
+    build:
+      context: ./05-week
+      dockerfile: Dockerfile
+    image: spark-pyspark
+    container_name: spark-week05
+    ports:
+      - "8888:8888"
+      - "4040:4040"
+    volumes:
+      - ./05-week/notebooks:/opt/notebooks
+    depends_on:
+      - base
