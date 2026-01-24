@@ -22,8 +22,23 @@ services:
     volumes:
       - vol-pgadmin_data:/var/lib/pgadmin  
 
+  jupyter:
+    container_name: jupyter_homework_01
+    #image: jupyter/base-notebook:python-3.11
+    build: .
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./notebooks:/home/jovyan/work
+      - ./data:/home/jovyan/data
+
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+    depends_on:
+      - db
+
 volumes:
   vol-pgdata:
-    name: vol-pgdata
+    name: homework_01_pgdata
   vol-pgadmin_data:
-    name: vol-pgadmin_data
+    name: homework_01_pgadmin
