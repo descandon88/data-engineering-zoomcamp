@@ -68,8 +68,8 @@ Connect to pgAdmin at http://localhost:8080 with:
 Run the Python scripts to ingest data into PostgreSQL:
 
 ```bash
-python ingest_data_taxi_trips_2025.py  # Assuming you have a script for parquet
-python ingest_data_zones.py
+python transformations/ingest_data_taxi_trips_11_2025.py --user=postgres --password=postgres --host=localhost --port=5433 --db=ny_taxi --table_name=green_taxi_trips --parquet_file=data/green_tripdata_2025-11.parquet
+python transformations/ingest_data_zones.py --user=postgres --password=postgres --host=localhost --port=5433 --db=ny_taxi --table_name=zones --csv_file=data/ntaxi_zone_lookup.csv
 ```
 
 Or use the Jupyter notebooks in the `notebooks/` folder for interactive ingestion.
@@ -78,25 +78,25 @@ Or use the Jupyter notebooks in the `notebooks/` folder for interactive ingestio
 
 ### Automated Pipeline Setup
 
-For convenience, a batch script `run_pipeline_homework_01.bat` has been created to automate the entire setup process:
+For convenience, a batch script `jobs/run_pipeline_homework_01.bat` has been created to automate the entire setup process:
 
 ```cmd
-run_pipeline_homework_01.bat
+jobs\run_pipeline_homework_01.bat
 ```
 
 This script will:
 
-- Download the required data files
+- Download the required data files automatically
 - Start Docker containers (PostgreSQL and pgAdmin)
 - Install Python dependencies
-- Ingest data into PostgreSQL
+- Ingest data into PostgreSQL using the scripts in `transformations/`
 - Provide connection information
 
 ## Solutions
 
 The homework solutions are provided in two formats:
 
-1. **SQL Queries** (`queries.sql`): Direct SQL queries to run against the PostgreSQL database
+1. **SQL Queries** (`sql_files/queries_homework_01.sql`): Direct SQL queries to run against the PostgreSQL database
 2. **Python Analysis** (`notebooks/notebook_homework_01.ipynb`): Pandas-based analysis in Jupyter notebook
 
 Both approaches yield the same results, but the SQL version follows the homework requirements more closely.
@@ -341,15 +341,22 @@ terraform apply
 
 - `docker-compose.yaml`: Docker Compose configuration for PostgreSQL and pgAdmin
 - `Dockerfile`: Custom Docker image for the application
-- `ingest_data_taxi_trips_11_2025.py`: Script to ingest parquet taxi trip data into PostgreSQL
-- `ingest_data_taxi_trips_2019.py`: Script to ingest taxi trip data (original version)
-- `ingest_data_zones.py`: Script to ingest zone lookup CSV data into PostgreSQL
-- `queries.sql`: SQL queries for the homework questions (main solutions)
-- `run_pipeline_homework_01.bat`: Batch script to orchestrate the entire pipeline setup
 - `requirements.txt`: Python dependencies
-- `data/`: Directory for data files
-- `notebooks/`: Jupyter notebooks for data exploration, including `notebook_homework_01.ipynb` with Python solutions
+- `homework_01-questions.md`: Homework questions and requirements
+- `data/`: Directory containing data files (green_tripdata_2025-11.parquet, ntaxi_zone_lookup.csv)
+- `transformations/`: Data ingestion and transformation scripts
+  - `ingest_data_taxi_trips_11_2025.py`: Script to ingest parquet taxi trip data into PostgreSQL
+  - `ingest_data_taxi_trips_2019.py`: Script to ingest taxi trip data (original version)
+  - `ingest_data_zones.py`: Script to ingest zone lookup CSV data into PostgreSQL
+- `sql_files/`: SQL query files
+  - `queries_homework_01.sql`: SQL queries for the homework questions (main solutions)
+- `notebooks/`: Jupyter notebooks for data exploration
+  - `notebook_homework_01.ipynb`: Python analysis solutions
+  - `ingest_zones.ipynb`: Notebook for zone data ingestion
+- `jobs/`: Job orchestration scripts
+  - `run_pipeline_homework_01.bat`: Batch script to orchestrate the entire pipeline setup
 - `img/`: Screenshots and images
+- `tmp/`: Temporary files and notes
 
 ## Submitting the Solutions
 
@@ -359,4 +366,4 @@ Make sure to include a link to this repository.
 
 ## Learning in Public
 
-We encourage sharing your learning journey! Post about your progress on LinkedIn or Twitter using the examples provided in `homework-questions.md`.
+We encourage sharing your learning journey! Post about your progress on LinkedIn or Twitter using the examples provided in `homework_01-questions.md`.
