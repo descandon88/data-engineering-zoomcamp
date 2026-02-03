@@ -34,10 +34,7 @@ docker-compose up -d
 - Add automated tests or simple run scripts to validate ingestion pipelines.
 - Optionally containerize and parameterize notebooks for reproducible runs.
 
-## Contact / Notes
-This README summarizes the current state and progress. If you want, I can:
-- Add per-week README files with run commands.
-- Create a single wrapper script to run common demos.
+
 
 --
 Updated: Progress notes added to this repository's root README.
