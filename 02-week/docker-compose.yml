@@ -39,7 +39,7 @@ services:
           server:
             basicAuth:
               username: david.escandon.v@gmail.com
-              password: kestra
+              password: dezoomcampKestra26
           repository:
             type: postgres
           storage:
