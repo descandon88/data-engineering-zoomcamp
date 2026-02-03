@@ -25,7 +25,8 @@ services:
     volumes:
       - vol-kestra-data:/app/storage
       - /var/run/docker.sock:/var/run/docker.sock
-      - /tmp/kestra-wd:/tmp/kestra-wd
+      - kestra_tmp:/tmp/kestra-wd
+    #  - /tmp/kestra-wd:/tmp/kestra-wd
     environment:
       KESTRA_CONFIGURATION: |
         datasources:
@@ -50,6 +51,7 @@ services:
           tasks:
             tmpDir:
               path: /tmp/kestra-wd/tmp
+
           url: http://localhost:8080/
     ports:
       - "8080:8080"
@@ -106,3 +108,5 @@ volumes:
     name: vol-kestra-metadata
   vol-kestra-data:
     name: vol-kestra-data
+  kestra_tmp:
+    driver: local
