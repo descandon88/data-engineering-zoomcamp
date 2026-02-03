@@ -23,3 +23,16 @@ services:
       - ./05-week/notebooks:/opt/notebooks
     depends_on:
       - base
+
+jupyter:
+    image: jupyter/pyspark-notebook:python-3.11
+    container_name: jupyter-lab
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./05-week/notebooks:/home/jovyan/work
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    command: start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''
+    depends_on:
+      - spark

@@ -356,7 +356,8 @@ terraform apply
 - `jobs/`: Job orchestration scripts
   - `run_pipeline_homework_01.bat`: Batch script to orchestrate the entire pipeline setup
 - `img/`: Screenshots and images
-- `tmp/`: Temporary files and notes
+  - `module1_diagram.svg`: Diagram for Module 1 (data flow: ingestion → Postgres → queries)
+ - `tmp/`: Temporary files and notes
 
 ## Submitting the Solutions
 
