@@ -45,6 +45,14 @@ Complete the quiz shown below. It's a set of 6 multiple-choice questions to test
 
 ## Solution
 
+### Question 1: Within the execution for `Yellow` Taxi data for the year `2020` and month `12`: what is the uncompressed file size?
+
+**Answer: 128.3 MiB**
+
+### Question 2: What is the rendered value of the variable `file` when the inputs `taxi` is set to `green`, `year` is set to `2020`, and `month` is set to `04` during execution?
+
+**Answer: green_tripdata_2020-04.csv**
+
 ### Question 3: How many rows are there for the `Yellow` Taxi data for all CSV files in the year 2020?
 
 ![Q3 Result](img/q3.png)
@@ -62,6 +70,10 @@ Complete the quiz shown below. It's a set of 6 multiple-choice questions to test
 ![Q5 Result](img/q5.png)
 
 **Answer: 1,925,152**
+
+## Implementation Details
+
+The `homework_02.yaml` script is the Kestra workflow used to execute and answer questions 3-5. This workflow orchestrates the ETL pipeline to extract, transform, and load NYC Taxi data into PostgreSQL, allowing us to count the rows for different taxi types and years.
 
 
 ## Learning in Public
