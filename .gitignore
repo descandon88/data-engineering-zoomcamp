@@ -5,6 +5,7 @@
 *.csv.gz
 *.parquet
 *.txt
+*.duckdb
 # ==============================
 # Postgres volume (Docker)
 # ==============================
