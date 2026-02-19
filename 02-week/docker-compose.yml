@@ -26,8 +26,12 @@ services:
       - vol-kestra-data:/app/storage
       - /var/run/docker.sock:/var/run/docker.sock
       - kestra_tmp:/tmp/kestra-wd
+      - ./02-workflow-orchestration/flows:/app/flows:ro
     #  - /tmp/kestra-wd:/tmp/kestra-wd
+    env_file:
+      - ./.env_encoded
     environment:
+      # SECRET_MYSECRET: a2VzdHJhLXNhbmRib3gtNDg3NTAxLWUxNThkMDA4NWUxYi5qc29u
       KESTRA_CONFIGURATION: |
         datasources:
           postgres:
