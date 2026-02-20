@@ -28,3 +28,18 @@ And assuming `int_trips_unioned.sql` depends on:
 when running:
 dbt run --select int_trips_unioned
 ```
+
+# Question 2: dbt test
+
+## Correct Answer
+
+**dbt will fail the test, returning a non-zero exit code**
+```
+  LINE 18: from "taxi_rides_ny"."dev"."fct_trips"
+                ^
+17:21:06
+17:21:06    compiled code at target/compiled/dbt_project/models/marts/schema.yml/unique_fct_trips_trip_id.sql
+17:21:06  
+17:21:06  Done. PASS=0 WARN=0 ERROR=9 SKIP=0 NO-OP=0 TOTAL=9
+root@b44600328ca7:/usr/app# 
+```
