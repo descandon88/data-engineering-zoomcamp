@@ -7,4 +7,5 @@ services:
       - ./dbt_project:/usr/app
       - ./profiles:/root/.dbt
       - ./duckdb:/duckdb
+      - ./data:/data
 
