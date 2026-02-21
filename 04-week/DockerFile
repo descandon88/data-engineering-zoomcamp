@@ -5,8 +5,16 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # Instalar dbt + duckdb + git
-RUN apt-get update && apt-get install -y git \
+#RUN apt-get update && apt-get install -y git \
+#    && pip install --no-cache-dir dbt-duckdb==1.8.0 duckdb 
+RUN apt-get update && apt-get install -y git curl unzip \
+    && curl -L https://github.com/duckdb/duckdb/releases/latest/download/duckdb_cli-linux-amd64.zip -o duckdb.zip \
+    && unzip duckdb.zip \
+    && mv duckdb /usr/local/bin/duckdb \
+    && chmod +x /usr/local/bin/duckdb \
+    && rm duckdb.zip \
     && pip install --no-cache-dir dbt-duckdb==1.8.0
+
 
 WORKDIR /usr/app
 

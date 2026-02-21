@@ -31,7 +31,7 @@ dbt_project:
       extensions:
         - parquet
       settings:
-        memory_limit: "4GB"
+        memory_limit: "6GB"
         preserve_insertion_order: false
 
 # Troubleshooting:

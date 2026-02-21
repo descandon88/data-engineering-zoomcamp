@@ -1,3 +1,5 @@
+{{ config(materialized='table') }}
+
 -- Enrich and deduplicate trip data
 -- Demonstrates enrichment and surrogate key generation
 -- Note: Data quality analysis available in analyses/trips_data_quality.sql
@@ -51,12 +53,35 @@ cleaned_and_enriched as (
     from unioned u
     left join payment_types pt
         on coalesce(u.payment_type, 0) = pt.payment_type
-)
+),
 
-select * from cleaned_and_enriched
+-- select * from cleaned_and_enriched
 
 -- Deduplicate: if multiple trips match (same vendor, second, location, service), keep first
-qualify row_number() over(
-    partition by vendor_id, pickup_datetime, pickup_location_id, service_type
-    order by dropoff_datetime
-) = 1
+-- qualify row_number() over(
+--    partition by vendor_id, pickup_datetime, pickup_location_id, service_type
+--     order by dropoff_datetime
+-- ) = 1
+
+
+dedup_keys as (
+
+    select
+        vendor_id,
+        pickup_datetime,
+        pickup_location_id,
+        service_type,
+        min(dropoff_datetime) as dropoff_datetime
+    from cleaned_and_enriched
+    group by 1,2,3,4
+
+)
+
+select c.*
+from cleaned_and_enriched c
+join dedup_keys d
+    on c.vendor_id = d.vendor_id
+   and c.pickup_datetime = d.pickup_datetime
+   and c.pickup_location_id = d.pickup_location_id
+   and c.service_type = d.service_type
+   and c.dropoff_datetime = d.dropoff_datetime

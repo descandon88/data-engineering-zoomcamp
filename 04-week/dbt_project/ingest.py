@@ -67,4 +67,6 @@ if __name__ == "__main__":
             SELECT * FROM read_parquet('data/{taxi_type}/*.parquet', union_by_name=true)
         """)
 
+
+
     con.close()

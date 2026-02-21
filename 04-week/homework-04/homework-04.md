@@ -43,3 +43,44 @@ dbt run --select int_trips_unioned
 17:21:06  Done. PASS=0 WARN=0 ERROR=9 SKIP=0 NO-OP=0 TOTAL=9
 root@b44600328ca7:/usr/app# 
 ```
+
+# Question 3: Count of records in fct_monthly_zone_revenue
+
+## Correct Answer
+
+**12,184**
+
+```
+root@f6f0f579cc02:/usr/app# duckdb taxi_rides_ny.duckdb
+DuckDB v1.4.4 (Andium) 6ddac802ff
+Enter ".help" for usage hints.
+D select count(*) from prod.fct_monthly_zone_revenue;
+100% ▕██████████████████████████████████████▏ (00:00:13.77 elapsed)     
+┌──────────────┐
+│ count_star() │
+│    int64     │
+├──────────────┤
+│    12184     │
+└──────────────┘
+```
+
+
+# Question 6: count of records in stg_fhv_tripdata
+
+## Correct Answer
+**43244693**
+
+```
+05:11:54  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=1
+root@f6f0f579cc02:/usr/app# duckdb taxi_rides_ny.duckdb
+DuckDB v1.4.4 (Andium) 6ddac802ff
+Enter ".help" for usage hints.
+D select count(*) from prod.stg_fhv_tripdata;
+┌─────────────────┐
+│  count_star()   │
+│      int64      │
+├─────────────────┤
+│    43244693     │
+│ (43.24 million) │
+└─────────────────
+```
