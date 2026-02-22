@@ -64,6 +64,36 @@ D select count(*) from prod.fct_monthly_zone_revenue;
 └──────────────┘
 ```
 
+# Question 4: 
+
+## Correct Answer
+**East Harlem North**
+
+
+D select ft.pickup_zone, sum(ft.total_amount) as total_revenue from prod.fct_trips ft where ft.service_type = 'Green' and YEAR(ft.pickup_datetime) = 2020 group by ft.pickup_zone order by sum(ft.total_amount) DESC LIMIT 1;
+┌───────────────────┬───────────────┐
+│    pickup_zone    │ total_revenue │
+│      varchar      │ decimal(38,3) │
+├───────────────────┼───────────────┤
+│ East Harlem North │  1817426.300  │
+└───────────────────┴───────────────┘
+D
+
+# Question 5: 
+
+## Correct Answer
+**5610885**
+```
+select count(ft.trip_id)  from prod.fct_trips ft where year(ft.pickup_datetime) in (2019) and month(ft.pickup_datetime) and ft.service_type like '%Green%' ;
+┌───────────────────┐
+│ count(ft.trip_id) │
+│       int64       │
+├───────────────────┤
+│      5610885      │
+│  (5.61 million)   │
+└───────────────────┘
+```
+
 
 # Question 6: count of records in stg_fhv_tripdata
 
